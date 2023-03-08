@@ -1,0 +1,23 @@
+{
+  "name": "untek-utility/log",
+  "type": "extension",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Zn Developer",
+      "email": "zndev@ya.ru"
+    }
+  ],
+  "minimum-stability": "dev",
+  "require": {
+    "psr/log": "~1.0",
+		"monolog/monolog": "~1.22 || ~2.0",
+		"untek-pack/core": "0.x-dev"
+  },
+  "autoload": {
+    "psr-4": {
+      "Untek\\Utility\\Log\\": "src",
+      "Untek\\Utility\\Log\\Tests\\": "tests"
+    }
+  }
+}
