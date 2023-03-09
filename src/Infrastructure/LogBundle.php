@@ -2,7 +2,7 @@
 
 namespace Untek\Utility\Log\Infrastructure;
 
-use Mservis\Operator\Shared\Infrastructure\Bundle\BaseBundle;
+use Untek\Core\Kernel\Bundle\BaseBundle;
 
 class LogBundle extends BaseBundle
 {
