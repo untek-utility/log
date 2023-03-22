@@ -9,7 +9,7 @@ class LogBundle extends BaseBundle
 
     public function getName(): string
     {
-        return 'init';
+        return 'log';
     }
 
     public function boot(): void
