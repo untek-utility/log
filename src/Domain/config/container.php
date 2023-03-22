@@ -26,38 +26,40 @@ return [
             $envStorage = $container->get(EnvStorageInterface::class);
 
             $channel = 'application';
-            
-            $driver = $envStorage->get('LOG_DRIVER') ?: null;
+            $fileMask = getenv('LOG_FILE_MASK');
+            $directory = getenv('LOG_DIRECTORY');
+            $driver = getenv('LOG_DRIVER');
+
             if ($driver == 'file') {
-                
-                $fileMask = $envStorage->get('LOG_FILE_MASK');
                 if($fileMask) {
-                    $now = new \DateTime();
-                    $replacement = [
-                        'channel' => $channel,
-                        'year' => $now->format('Y'),
-                        'month' => $now->format('m'),
-                        'day' => $now->format('d'),
-                        'hour' => $now->format('H'),
-                        'minute' => $now->format('i'),
-                        'second' => $now->format('s'),
-                    ];
-                    $logFileName = $envStorage->get('LOG_DIRECTORY') . '/' . TemplateHelper::render($fileMask, $replacement, '{{', '}}');
+                    $logFileMask = new LogFileMask($fileMask);
+                    $logFileMask->addReplacement('channel', $channel);
+                    $logFileMask->addReplacementFromTime();
+                    $relativeFileName = $logFileMask->render();
                 } else {
-                    $logFileName = $envStorage->get('LOG_DIRECTORY') . '/'.$channel.'.json';
+                    $relativeFileName = $channel . '.json';
                 }
-                
+                $logFileName = $directory . '/' . $relativeFileName;
                 $handler = new StreamHandler($logFileName);
-                $formatterClass = $envStorage->get('LOG_FORMATTER') ?: JsonFormatter::class;
-                $formatter = $container->get($formatterClass);
-                $handler->setFormatter($formatter);
+            } elseif ($driver == 'stdout') {
+                $logFileName = 'php://stdout';
+                $handler = new StreamHandler($logFileName);
             } elseif ($driver == 'db') {
                 /** @var AbstractProcessingHandler $handler */
                 $handler = $container->get(EloquentHandler::class);
             } else {
-//                $handler = new \Monolog\Handler\NullHandler();
-                throw new Exception('Not found handler!');
+                throw new Exception('Select log driver in env!');
             }
+
+
+
+            $formatter = new JsonFormatter();
+            $formatter->includeStacktraces();
+            if (!getenv('APP_ENV') !== 'prod') {
+                $formatter->setJsonPrettyPrint(true);
+            }
+            $handler->setFormatter($formatter);
+
             return $handler;
         },
         LoggerInterface::class => function (ContainerInterface $container) {

@@ -14,7 +14,6 @@ class LogBundle extends BaseBundle
 
     public function boot(): void
     {
-        
         $this->configureFromPhpFile(__DIR__ . '/../Domain/config/container.php');
     }
 }
