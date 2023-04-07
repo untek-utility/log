@@ -5,7 +5,7 @@ namespace Untek\Utility\Log\Domain\Monolog\Formatter;
 use Monolog\DateTimeImmutable;
 use Monolog\Formatter\NormalizerFormatter;
 use Untek\Core\Arr\Helpers\ArrayHelper;
-use Untek\Domain\Entity\Helpers\EntityHelper;
+use Untek\Model\Entity\Helpers\EntityHelper;
 use Untek\Utility\Log\Domain\Entities\LogEntity;
 
 class EloquentFormatter extends NormalizerFormatter

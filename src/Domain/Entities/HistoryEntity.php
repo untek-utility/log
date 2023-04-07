@@ -5,8 +5,8 @@ namespace Untek\Utility\Log\Domain\Entities;
 use Monolog\DateTimeImmutable;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
-use Untek\Domain\Entity\Interfaces\EntityIdInterface;
-use Untek\Domain\Validator\Interfaces\ValidationByMetadataInterface;
+use Untek\Model\Entity\Interfaces\EntityIdInterface;
+use Untek\Model\Validator\Interfaces\ValidationByMetadataInterface;
 use DateTime;
 
 class HistoryEntity implements EntityIdInterface, ValidationByMetadataInterface

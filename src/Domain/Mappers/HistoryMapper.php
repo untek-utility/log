@@ -2,7 +2,7 @@
 
 namespace Untek\Utility\Log\Domain\Mappers;
 
-use Untek\Domain\Repository\Interfaces\MapperInterface;
+use Untek\Model\Repository\Interfaces\MapperInterface;
 
 class HistoryMapper implements MapperInterface
 {
